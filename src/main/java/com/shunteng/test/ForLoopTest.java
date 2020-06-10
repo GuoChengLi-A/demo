@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description TODO
+ * @Description 测试foreach与普通for循环性能
  * @Author GCL
  * @Date 2020/6/1 上午11:00
  */

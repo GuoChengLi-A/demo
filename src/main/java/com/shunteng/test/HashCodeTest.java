@@ -3,7 +3,7 @@ package com.shunteng.test;
 import java.util.Objects;
 
 /**
- * @Description TODO
+ * @Description 测试equals与hashcode必须同时重写的原因
  * @Author GCL
  * @Date 2020/5/26 下午1:51
  */
