@@ -25,7 +25,7 @@ public class SHA256Test {
     }
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        byte[] str = SHA256Encode("hello world");
+        byte[] str = SHA256Encode("this is a test file");
         StringBuffer buffer = new StringBuffer();
         for (int j = 0; j < str.length; j++) {
             String s = Integer.toHexString(str[j] & 0xFF);
@@ -34,6 +34,7 @@ public class SHA256Test {
             }
             buffer.append(s);
         }
-        System.out.println(buffer);
+        System.out.println(buffer.toString());
+        System.out.println(buffer.toString().toUpperCase());
     }
 }
