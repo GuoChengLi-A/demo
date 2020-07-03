@@ -5,7 +5,7 @@ package com.shunteng.gof;
  * @Author GCL
  * @Date 2020/7/3 下午1:56
  */
-public class LogChainOfResposityTest {
+public class LogChainOfResponsibilityTest {
     public static void main(String[] args) {
         Logger log = new Logger(2, "NullPointException");
         AbstractLoggerHandler infoLogger = new InfoLogger(0);

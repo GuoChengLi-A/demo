@@ -5,7 +5,7 @@ package com.shunteng.gof;
  * @Author GCL
  * @Date 2020/7/3 上午11:24
  */
-public class ChainOfResposityTest {
+public class ChainOfResponsibilityTest {
 
     public static void main(String[] args) {
         LeaveRequest leaveRequest = new LeaveRequest("咚咚锵",20);
