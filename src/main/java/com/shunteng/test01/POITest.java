@@ -23,15 +23,19 @@ import java.util.stream.Collectors;
  */
 public class POITest {
 
-    private static String findDateFromDocument(DocumentInputDto documentInputDto) {
-        if (documentInputDto.getDateSecond().isEmpty()) {
-            return documentInputDto.getDateFirst();
-        } else if (documentInputDto.getDateThird().isEmpty()) {
-            return documentInputDto.getDateSecond();
-        } else if (documentInputDto.getDateFourth().isEmpty()) {
-            return documentInputDto.getDateThird();
-        } else if (documentInputDto.getDataFifth().isEmpty()) {
-            return documentInputDto.getDateFourth();
+    /**
+    * @Description: 获取最近日期
+    * @param sourceDto
+    */
+    private static String findDateFromDocument(SourceDto sourceDto) {
+        if (sourceDto.getDateSecond().isEmpty()) {
+            return sourceDto.getDateFirst();
+        } else if (sourceDto.getDateThird().isEmpty()) {
+            return sourceDto.getDateSecond();
+        } else if (sourceDto.getDateFourth().isEmpty()) {
+            return sourceDto.getDateThird();
+        } else if (sourceDto.getDataFifth().isEmpty()) {
+            return sourceDto.getDateFourth();
         } else {
             return "";
         }
@@ -42,16 +46,16 @@ public class POITest {
     //row 从0开始 column从1开始
     public static void main(String[] args) throws Exception {
         ExcelUtil source = new ExcelUtil("BD", "C:\\Users\\Guo\\Desktop\\source.xlsm");
-        List<DocumentInputDto> listSourceDto = source.readExcelToEntity(DocumentInputDto.class, 2, 820, 9, 51, 53, 55, 57, 59);
+        List<SourceDto> listSourceDto = source.readExcelToEntity(SourceDto.class, 2, 820, 9, 51, 53, 55, 57, 59);
         ExcelUtil target = new ExcelUtil("设计文件翻译提交批复状态表", "C:\\Users\\Guo\\Desktop\\target.xlsx");
-        List<DataExport> listTargetDto = target.readExcelToEntity(DataExport.class, 5, 434, 5);
+        List<TargetDto> listTargetDto = target.readExcelToEntity(TargetDto.class, 5, 434, 5);
         List<String> listString = new ArrayList<>();
         for (int i = 0; i < listTargetDto.size(); i++) {
-            DataExport dataExport = listTargetDto.get(i);
+            TargetDto targetDto = listTargetDto.get(i);
             for (int j = 0; j < listSourceDto.size(); j++) {
-                DocumentInputDto documentInputDto = listSourceDto.get(j);
-                if (dataExport.getData().equals(documentInputDto.getDocument())) {
-                    listString.add(findDateFromDocument(documentInputDto));
+                SourceDto sourceDto = listSourceDto.get(j);
+                if (targetDto.getData().equals(sourceDto.getDocument())) {
+                    listString.add(findDateFromDocument(sourceDto));
                     break;
                 }
                 if (j == listSourceDto.size() - 1) {
@@ -181,12 +185,6 @@ class ExcelUtil {
         }
     }
 
-    /**
-     * @Description: 获取目标excel文件的指定列数据 column:从0开始
-     */
-    public List<String> listSource(int column) {
-        return null;
-    }
 
     public XSSFSheet getXssfSheet() {
         return readXssfSheet;
@@ -215,7 +213,10 @@ class ExcelUtil {
 
 }
 
-class DocumentInputDto {
+/**
+* @Description: source实体类 数据列数不同需要重新定义
+*/
+class SourceDto {
     private String document;
     private String dateFirst;
     private String dateSecond;
@@ -278,7 +279,10 @@ class DocumentInputDto {
     }
 }
 
-class DataExport {
+/**
+* @Description: taget实体类，数据列数不同需要重新定义
+*/
+class TargetDto {
     private String data;
 
     @MethodOrder(1)
