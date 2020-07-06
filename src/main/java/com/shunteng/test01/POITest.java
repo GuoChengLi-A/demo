@@ -1,8 +1,8 @@
 package com.shunteng.test01;
 
 import com.shunteng.annotation.MethodOrder;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -10,7 +10,10 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -20,15 +23,47 @@ import java.util.stream.Collectors;
  */
 public class POITest {
 
-    //读取excel到内存中，需要映射？映射会好处理 只返回带注解的方法
+    /**
+    * @Description: 获取最近日期
+    * @param sourceDto
+    */
+    private static String findDateFromDocument(SourceDto sourceDto) {
+        if (sourceDto.getDateSecond().isEmpty()) {
+            return sourceDto.getDateFirst();
+        } else if (sourceDto.getDateThird().isEmpty()) {
+            return sourceDto.getDateSecond();
+        } else if (sourceDto.getDateFourth().isEmpty()) {
+            return sourceDto.getDateThird();
+        } else if (sourceDto.getDataFifth().isEmpty()) {
+            return sourceDto.getDateFourth();
+        } else {
+            return "";
+        }
+
+    }
+
+    //可优化点：类型判断之后再获取值 尤其是日期类型及richValue
+    //row 从0开始 column从1开始
     public static void main(String[] args) throws Exception {
-        String pathName = "src/testExcel.xlsx";
-        String sheetName = "sheet1";
-        ExcelUtil excelUtil = new ExcelUtil(sheetName, pathName);
-        List<ExcelInputDto> listExcelInputDto = excelUtil.readExcelToEntity(ExcelInputDto.class);
-//        listExcelInputDto.stream().map(ExcelInputDto::toString).forEach(System.out::println);
-        List<String> collect = listExcelInputDto.stream().map(ExcelInputDto::getBirthday).collect(Collectors.toList());
-        excelUtil.writeExcelFromList(collect, "/home/gcl/output.xlsx");
+        ExcelUtil source = new ExcelUtil("BD", "C:\\Users\\Guo\\Desktop\\source.xlsm");
+        List<SourceDto> listSourceDto = source.readExcelToEntity(SourceDto.class, 2, 820, 9, 51, 53, 55, 57, 59);
+        ExcelUtil target = new ExcelUtil("设计文件翻译提交批复状态表", "C:\\Users\\Guo\\Desktop\\target.xlsx");
+        List<TargetDto> listTargetDto = target.readExcelToEntity(TargetDto.class, 5, 434, 5);
+        List<String> listString = new ArrayList<>();
+        for (int i = 0; i < listTargetDto.size(); i++) {
+            TargetDto targetDto = listTargetDto.get(i);
+            for (int j = 0; j < listSourceDto.size(); j++) {
+                SourceDto sourceDto = listSourceDto.get(j);
+                if (targetDto.getData().equals(sourceDto.getDocument())) {
+                    listString.add(findDateFromDocument(sourceDto));
+                    break;
+                }
+                if (j == listSourceDto.size() - 1) {
+                    listString.add("");
+                }
+            }
+        }
+        target.writeExcelFromList(listString,"F://date.xlsx");
     }
 }
 
@@ -56,48 +91,69 @@ class ExcelUtil {
      */
     public String getExcelDateByIndex(int row, int column) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        XSSFRow dataRow = readXssfSheet.getRow(row);
-        XSSFCell cellValue = dataRow.getCell(column);
-        if (cellValue.toString().trim().contains("-")) {
-            return dateFormat.format(cellValue.getDateCellValue());
+        XSSFCell cell = readXssfSheet.getRow(row).getCell(column);
+        if (null != cell) {
+            if (cell.getCellType() == 0 && HSSFDateUtil.isCellDateFormatted(cell)) {
+                return dateFormat.format(cell.getDateCellValue());
+            }
+            return cell.getRichStringCellValue().getString();
         }
-        return cellValue.toString();
+        return null;
     }
 
-    public void setExcelDataByIndex(int row, int column, String str) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if (str.trim().contains("-")) {
-            Date date = dateFormat.parse(str);
-            writeXssfSheet.getRow(row).createCell(column).setCellValue(dateFormat.format(date));
-        } else {
-            writeXssfSheet.getRow(row).createCell(column).setCellValue(str);
-        }
-    }
-
-    public <T> List<T> readExcelToEntity(Class<T> clazz) throws Exception {
+    /**
+     * @param clazz    实体类
+     * @param rowStart 行开始位置
+     * @param rowEnd   行结束位置
+     * @param columns  需要哪些列 需要与实体类属性个数对应
+     * @Description: 将excel表格中的数据读取到entity实体类中
+     */
+    public <T> List<T> readExcelToEntity(Class<T> clazz, int rowStart, int rowEnd, int... columns) throws Exception {
         List<T> listT = new ArrayList<>();
         Method method = null;
         String cellValue = null;
-        int firstRowNum = readXssfSheet.getFirstRowNum();
-        int lastRowNum = readXssfSheet.getLastRowNum();
         Method[] methods = clazz.getDeclaredMethods();
         List<Method> listMethod = Arrays.stream(methods).filter(method1 -> method1.isAnnotationPresent(MethodOrder.class))
                 .sorted(Comparator.comparing(method2 -> method2.getAnnotation(MethodOrder.class).value()))
                 .collect(Collectors.toList());
-        for (int i = firstRowNum + 1; i < lastRowNum + 1; i++) {
+        for (int i = rowStart - 1; i < rowEnd; i++) {
             T instance = clazz.newInstance();
-            for (int j = 0; j < listMethod.size(); j++) {
-                cellValue = getExcelDateByIndex(i, j);
+            for (int j = 0; j < columns.length; j++) {
+                cellValue = getExcelDateByIndex(i, columns[j] - 1);
                 method = listMethod.get(j);
                 method.setAccessible(true);
                 method.invoke(instance, cellValue);
-
             }
             listT.add(instance);
         }
         return listT;
     }
 
+    /**
+     * @param rowStart 行开始位置
+     * @param rowEnd   行结束位置
+     * @param column   获取哪些列数据
+     * @Description: 获取指定列数据
+     */
+    public List<List<String>> readExcelToMap(int rowStart, int rowEnd, int... column) {
+        List<List<String>> list = new ArrayList<>(rowEnd - rowStart + 1);
+        for (int i = rowStart - 1; i < rowEnd; i++) {
+            List<String> listRowData = new ArrayList<>(column.length);
+            for (int j = 0; j < column.length; j++) {
+                String cellValue = getExcelDateByIndex(i, column[j] - 1);
+                listRowData.add(cellValue);
+            }
+            list.add(listRowData);
+        }
+        return list;
+    }
+
+
+    /**
+     * @param list           需要导出的数据
+     * @param exportPathName 文件导出位置
+     * @Description: 将列表中的数据导出到excel中
+     */
     public void writeExcelFromList(List<String> list, String exportPathName) {
         File file = new File(exportPathName);
         FileOutputStream outputStream = null;
@@ -109,9 +165,8 @@ class ExcelUtil {
             writeWorkBook = new XSSFWorkbook();
             writeXssfSheet = writeWorkBook.createSheet();
             for (int i = 0; i < list.size(); i++) {
-                writeXssfSheet.createRow(i);
                 String str = list.get(i);
-                setExcelDataByIndex(i, 0, str);
+                writeXssfSheet.createRow(i).createCell(0).setCellValue(str);
             }
             writeWorkBook.write(bufferedOutputStream);
         } catch (Exception e) {
@@ -154,58 +209,88 @@ class ExcelUtil {
     public void setWriteXssfSheet(XSSFSheet writeXssfSheet) {
         this.writeXssfSheet = writeXssfSheet;
     }
+
+
 }
 
-class ExcelInputDto {
-
-    private String name;
-    private String sex;
-    private String age;
-    private String birthday;
+/**
+* @Description: source实体类 数据列数不同需要重新定义
+*/
+class SourceDto {
+    private String document;
+    private String dateFirst;
+    private String dateSecond;
+    private String dateThird;
+    private String dateFourth;
+    private String dataFifth;
 
     @MethodOrder(1)
-    public void setName(String name) {
-        this.name = name;
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     @MethodOrder(2)
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setDateFirst(String dateFirst) {
+        this.dateFirst = dateFirst;
     }
 
     @MethodOrder(3)
-    public void setAge(String age) {
-        this.age = age;
+    public void setDateSecond(String dateSecond) {
+        this.dateSecond = dateSecond;
     }
 
     @MethodOrder(4)
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setDateThird(String dateThird) {
+        this.dateThird = dateThird;
     }
 
-    public String getName() {
-        return name;
+    @MethodOrder(5)
+    public void setDateFourth(String dateFourth) {
+        this.dateFourth = dateFourth;
     }
 
-    public String getSex() {
-        return sex;
+    @MethodOrder(6)
+    public void setDataFifth(String dataFifth) {
+        this.dataFifth = dataFifth;
     }
 
-    public String getAge() {
-        return age;
+    public String getDocument() {
+        return document;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public String getDateFirst() {
+        return dateFirst;
     }
 
-    @Override
-    public String toString() {
-        return "ExcelInputDto{" +
-                "name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", age='" + age + '\'' +
-                ", birthday='" + birthday + '\'' +
-                '}';
+    public String getDateSecond() {
+        return dateSecond;
+    }
+
+    public String getDateThird() {
+        return dateThird;
+    }
+
+    public String getDateFourth() {
+        return dateFourth;
+    }
+
+    public String getDataFifth() {
+        return dataFifth;
+    }
+}
+
+/**
+* @Description: taget实体类，数据列数不同需要重新定义
+*/
+class TargetDto {
+    private String data;
+
+    @MethodOrder(1)
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getData() {
+        return data;
     }
 }
