@@ -1,4 +1,3 @@
-/*
 package com.shunteng.test01;
 
 import com.google.common.base.Strings;
@@ -8,12 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-*/
-/**
- * @Description TODO
- * @Author GCL
- * @Date 2020/5/20 上午9:30
- *//*
 
 public class LambdaTest {
 
@@ -143,4 +136,4 @@ class Student {
                 ", sex='" + sex + '\'' +
                 '}';
     }
-}*/
+}
