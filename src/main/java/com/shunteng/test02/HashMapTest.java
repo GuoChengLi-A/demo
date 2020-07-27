@@ -22,5 +22,6 @@ public class HashMapTest {
         Set<String> strings = map.keySet();
         map.values().forEach(System.out::print);
 //        System.out.println(strings);
+
     }
 }

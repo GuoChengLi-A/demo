@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/../../../Spring-Framework/spring-webmvc/src/test/resources/org/springframework/web/context/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/../../../Spring-Framework/spring-webmvc/src/test/resources/org/springframework/web/context" relative="/" />
+        </webroots>
+      </configuration>
+    </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <datasource-mapping />
+        <naming-strategy-map />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/../../../Spring-Framework/spring-orm/src/test/resources/org/springframework/orm/jpa/persistence-invalid.xml" />
+      </configuration>
+    </facet>
+  </component>
+</module>

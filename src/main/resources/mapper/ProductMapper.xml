@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shunteng.mapper.ProductMapper">
-    <resultMap id="BaseResultMap" type="com.shunteng.po.Product">
+    <resultMap id="BaseResultMap" type="com.shunteng.entity.Product">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="quantity" jdbcType="INTEGER" property="quantity"/>
     </resultMap>
@@ -18,11 +18,11 @@
     delete from product
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.shunteng.po.Product" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.shunteng.entity.Product" useGeneratedKeys="true">
     insert into product (quantity)
     values (#{quantity,jdbcType=INTEGER})
   </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shunteng.po.Product"
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shunteng.entity.Product"
             useGeneratedKeys="true">
         insert into product
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -36,7 +36,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.shunteng.po.Product">
+    <update id="updateByPrimaryKeySelective" parameterType="com.shunteng.entity.Product">
         update product
         <set>
             <if test="quantity != null">
@@ -45,7 +45,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.shunteng.po.Product">
+    <update id="updateByPrimaryKey" parameterType="com.shunteng.entity.Product">
     update product
     set quantity = #{quantity,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

@@ -1,5 +1,10 @@
 package com.shunteng.test01;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Properties;
+
 /**
  * @Description TODO
  * @Author GCL
@@ -8,33 +13,45 @@ package com.shunteng.test01;
 public class ExtendsInitTest {
 
     public static void main(String[] args) {
-        apple apple = new apple();
-//        fruit fruit = new fruit();
-
+        FileInputStream fileInputStream = null;
+        FileOutputStream fileOutputStream=null;
+        try {
+            fileInputStream = new FileInputStream("src/main/resources/application.properties");
+            Properties properties = new Properties();
+            properties.load(fileInputStream);
+            properties.put("sex","male");
+            fileOutputStream = new FileOutputStream(new File("src/main/resources/application.properties"));
+            properties.store(fileOutputStream,"updata sex=male");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
-class fruit{
 
-    private static int count=10;
+class Fruit1 {
 
-    public fruit(){
+    private static int count = 10;
+
+    public Fruit1() {
         System.out.println("我是水果");
     }
+
     static {
         System.out.println("我还是水果");
         System.out.println(count);
     }
 }
 
-class apple extends fruit{
+class Apple extends Fruit1 {
 
-    private static int count=12;
+    private static int count = 12;
 
-    static{
+    static {
         System.out.println("我还是苹果");
         System.out.println(count);
     }
-    public apple() {
+
+    public Apple() {
         System.out.println("我是苹果");
     }
 }

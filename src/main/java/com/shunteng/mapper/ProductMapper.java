@@ -1,6 +1,6 @@
 package com.shunteng.mapper;
 
-import com.shunteng.po.Product;
+import com.shunteng.entity.Product;
 
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);

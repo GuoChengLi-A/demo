@@ -11,7 +11,7 @@
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://10.10.7.34:3306/shuntengweb1</jdbc-url>
+      <jdbc-url>jdbc:mysql://10.10.7.34:3305/shuntengweb1</jdbc-url>
     </data-source>
   </component>
 </project>
