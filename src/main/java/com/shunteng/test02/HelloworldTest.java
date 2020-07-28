@@ -15,5 +15,12 @@ public class HelloworldTest {
         if (flag == true) {//两值相等则进入if(flag==){}
             System.out.println("Hello, JVM!");
         }
+        char c='1';
+        float v = Float.intBitsToFloat(0x8000000);
+        System.out.println(v);
+        boolean [] booleanArray=new boolean[3];
+        int a=1;
+        long b=a;
+        double d=b;
     }
 }
