@@ -9,6 +9,32 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/../Spring-Framework" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/buildSrc" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/framework-bom" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/integration-tests" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-aop" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-aspects" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-beans" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-context" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-context-indexer" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-context-support" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-core" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-core/kotlin-coroutines" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-expression" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-instrument" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-jcl" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-jdbc" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-jms" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-messaging" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-orm" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-oxm" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-r2dbc" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-test" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-tx" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-web" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-webflux" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-webmvc" />
+            <option value="$PROJECT_DIR$/../Spring-Framework/spring-websocket" />
           </set>
         </option>
         <option name="useQualifiedModuleNames" value="true" />
