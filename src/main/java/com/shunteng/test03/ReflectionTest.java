@@ -12,9 +12,10 @@ public class ReflectionTest {
         Class klass = Class.forName("com.shunteng.test03.Test");
         Object testInstance = klass.newInstance();
         Method method = klass.getMethod("target", int.class);
-        for (int i = 0; i < 20; i++) {
+        System.out.println(System.identityHashCode(testInstance));
+        /* for (int i = 0; i < 20; i++) {
             method.invoke(testInstance, i);
-        }
+        }*/
     }
 }
 

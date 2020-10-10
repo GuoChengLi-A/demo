@@ -15,9 +15,5 @@ public class StaticMethodTest {
 
     }
 
-    public static String method(){
-
-    }
-
 
 }
