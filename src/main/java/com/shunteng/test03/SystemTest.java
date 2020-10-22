@@ -16,8 +16,12 @@ public class SystemTest {
         a[2]=3;
         a[3]=4;
         a[4]=5;
+        a[5]=6;
+        //src=[1, 2, 3, 4, 5, ...]
+        //des=[1, 2, 2, 3, 4, ...]
+        //
         System.arraycopy(a,1,a,2,3);
-        Arrays.stream(a).forEach(System.out::println);
+        Arrays.stream(a).forEach(System.out::print);
     }
 
 }
