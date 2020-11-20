@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/python-test/python-test.iml" filepath="$PROJECT_DIR$/python-test/python-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webServiceClient/webServiceClient.iml" filepath="$PROJECT_DIR$/webServiceClient/webServiceClient.iml" />
     </modules>
   </component>
 </project>

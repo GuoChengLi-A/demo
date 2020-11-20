@@ -4,7 +4,9 @@ import sun.security.action.GetPropertyAction;
 
 import java.security.AccessController;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @Description TODO
@@ -28,5 +30,10 @@ public class Test {
 
         String var1 = (String) AccessController.doPrivileged(new GetPropertyAction("sun.nio.ch.bugLevel"));
         System.out.println(var1);
+
+        Properties cn = System.getProperties();
+        String s = String.valueOf(cn);
+        Arrays.stream(s.split(",")).forEach(System.out::println);
+//        System.out.println(cn);
     }
 }

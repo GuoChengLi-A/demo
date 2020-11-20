@@ -6,4 +6,9 @@ package com.shunteng.test05;
  * @Date 2020/11/12 上午10:12
  */
 public class AssertTest {
+
+    public static void main(String[] args) {
+//        FileChannel.MapMode
+
+    }
 }
