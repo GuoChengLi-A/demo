@@ -22,25 +22,21 @@
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
   </resultMap>
-
   <sql id="Base_Column_List">
     id, order_id, user_id, member_id, company_name, mobile, `operator`, contract_id, 
     contract_img, contract_type, audit_status, start_time, end_time, refuse_reason, contract_balance, 
     upload_time, createtime, updatetime, isdelete
   </sql>
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from csb_member_contract
     where id = #{id,jdbcType=BIGINT}
   </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from csb_member_contract
     where id = #{id,jdbcType=BIGINT}
   </delete>
-
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.shunteng.entity.CsbMemberContract" useGeneratedKeys="true">
     insert into csb_member_contract (order_id, user_id, member_id, 
       company_name, mobile, `operator`, 
@@ -57,7 +53,6 @@
       #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{isdelete,jdbcType=INTEGER}
       )
   </insert>
-
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shunteng.entity.CsbMemberContract" useGeneratedKeys="true">
     insert into csb_member_contract
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -173,7 +168,6 @@
       </if>
     </trim>
   </insert>
-
   <update id="updateByPrimaryKeySelective" parameterType="com.shunteng.entity.CsbMemberContract">
     update csb_member_contract
     <set>
@@ -234,7 +228,6 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-
   <update id="updateByPrimaryKey" parameterType="com.shunteng.entity.CsbMemberContract">
     update csb_member_contract
     set order_id = #{orderId,jdbcType=VARCHAR},
@@ -257,5 +250,4 @@
       isdelete = #{isdelete,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-
 </mapper>
