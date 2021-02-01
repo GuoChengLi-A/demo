@@ -6,6 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.shunteng.demo</groupId>
     <artifactId>demo</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -34,6 +35,9 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>spring</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -113,6 +117,13 @@
             <version>3.3.2</version>
             <scope>${libScope}</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.2.9.RELEASE</version>
+        </dependency>
+
     </dependencies>
 
 </project>

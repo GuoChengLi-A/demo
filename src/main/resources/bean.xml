@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="ioc.User" id="parent1">
+        <constructor-arg index="0" value="Jack"/>
+        <constructor-arg index="1" value="Rose"/>
+        <constructor-arg index="2" value="18"/>
+    </bean>
+
+    <bean class="ioc.User" id="parent2">
+        <property name="firstName"  value="Kim"/>
+        <property name="lastName"   value="Tim"/>
+        <property name="age" value="23"/>
+    </bean>
+</beans>
