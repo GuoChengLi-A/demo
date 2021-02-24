@@ -1,4 +1,4 @@
-package bean;
+package bean.jvm;
 
 /**
  * @Description: TODO

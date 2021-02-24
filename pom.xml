@@ -40,6 +40,7 @@
     </modules>
 
     <dependencies>
+
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>org.json</artifactId>
@@ -123,6 +124,7 @@
             <artifactId>spring-context</artifactId>
             <version>5.2.9.RELEASE</version>
         </dependency>
+
 
     </dependencies>
 
